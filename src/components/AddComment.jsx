@@ -45,7 +45,7 @@ const AddComment = (props) => {
       );
 
       if (data.ok) {
-        props.getSingleBookComments();
+        props.getSingleBookComments(props.id);
         // this.setState({
         //   commentToAdd: {
         //     comment: "",

@@ -32,7 +32,7 @@ const SingleComment = (props) => {
 
     try {
       if (data.ok) {
-        props.getSingleBookComments();
+        props.getSingleBookComments(props.currentComment.elementId);
       } else {
         alert("An error occured and the comment was not removed");
       }
