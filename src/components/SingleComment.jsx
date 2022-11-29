@@ -1,23 +1,26 @@
-import { Component } from "react";
+import { useState } from "react";
 import { ListGroup, Button } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 
 //this class has as props currentComment from CommentsLists.jsx
 //in this prop we have a single comment which we have to render inside our div
-class SingleComment extends Component {
-  state = {
-    hovered: false,
+const SingleComment = (props) => {
+  // state = {
+  //   hovered: false,
+  // };
+
+  const [hovered, setHovered] = useState(false);
+
+  const showRemoveButton = () => {
+    // this.setState({
+    //   hovered: true,
+    // });
+    setHovered(true);
   };
 
-  showRemoveButton = () => {
-    this.setState({
-      hovered: true,
-    });
-  };
-
-  removeComment = async () => {
+  const removeComment = async () => {
     let data = await fetch(
-      `https://striveschool-api.herokuapp.com/api/comments/${this.props.currentComment._id}`,
+      `https://striveschool-api.herokuapp.com/api/comments/${props.currentComment._id}`,
       {
         method: "DELETE",
         headers: {
@@ -29,7 +32,7 @@ class SingleComment extends Component {
 
     try {
       if (data.ok) {
-        this.props.getSingleBookComments();
+        props.getSingleBookComments();
       } else {
         alert("An error occured and the comment was not removed");
       }
@@ -38,31 +41,31 @@ class SingleComment extends Component {
     }
   };
 
-  render() {
-    return (
-      <ListGroup.Item
-        onMouseOver={this.showRemoveButton}
-        onMouseLeave={() => this.setState({ hovered: false })}
-        className="bg-success write-just-on-one-line d-flex justify-content-between"
-      >
-        {this.state.hovered && (
-          <div className="w-75 write-just-on-one-line text-left">
-            {this.props.currentComment.comment}
-          </div>
-        )}
-        {!this.state.hovered && (
-          <div className="w-100 write-just-on-one-line text-left">
-            {this.props.currentComment.comment}
-          </div>
-        )}
-        {this.state.hovered && (
-          <Button variant="outline-danger" onClick={this.removeComment}>
-            <Icon.Trash3Fill className="customBinIcon" />
-          </Button>
-        )}
-      </ListGroup.Item>
-    );
-  }
-}
+  // render() {
+  return (
+    <ListGroup.Item
+      onMouseOver={showRemoveButton}
+      onMouseLeave={() => setHovered(false)}
+      className="bg-success write-just-on-one-line d-flex justify-content-between"
+    >
+      {hovered && (
+        <div className="w-75 write-just-on-one-line text-left">
+          {props.currentComment.comment}
+        </div>
+      )}
+      {!hovered && (
+        <div className="w-100 write-just-on-one-line text-left">
+          {props.currentComment.comment}
+        </div>
+      )}
+      {hovered && (
+        <Button variant="outline-danger" onClick={removeComment}>
+          <Icon.Trash3Fill className="customBinIcon" />
+        </Button>
+      )}
+    </ListGroup.Item>
+  );
+  // }
+};
 
 export default SingleComment;

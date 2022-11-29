@@ -1,5 +1,6 @@
 import { Card } from "react-bootstrap";
-import { Component } from "react";
+import { useState } from "react";
+// import { ConeStriped } from "react-bootstrap-icons";
 
 // const SingleBook = ({ book }) => {
 //   return (
@@ -19,28 +20,31 @@ import { Component } from "react";
 //   );
 // };
 
-class SingleBook extends Component {
-  state = {
-    selected: this.props.selected,
-  };
-  render() {
-    return (
-      <div className={`col-12 col-sm-6 mb-3 mx-auto`}>
-        <Card
-          className={`${this.state.selected ? "shadow-dark" : ""}`}
-          onClick={() => {
-            this.props.changeSelectedBookAsin(this.props.book.asin);
-            this.setState({ selected: !this.state.selected });
-          }}
-        >
-          <Card.Img variant="top" src={this.props.book.img} />
-          <Card.Body>
-            <Card.Title>{this.props.book.title}</Card.Title>
-          </Card.Body>
-        </Card>
-      </div>
-    );
-  }
-}
+const SingleBook = (props) => {
+  // state = {
+  //   selected: this.props.selected,
+  // };
+
+  const [selected, setSelected] = useState(props.selected);
+  // render() {
+  return (
+    <div className={`col-12 col-sm-6 mb-3 mx-auto`}>
+      <Card
+        className={`${selected ? "shadow-dark" : ""}`}
+        onClick={() => {
+          props.changeSelectedBookAsin(props.book.asin);
+          // this.setState({ selected: !this.state.selected });
+          setSelected(!selected);
+        }}
+      >
+        <Card.Img variant="top" src={props.book.img} />
+        <Card.Body>
+          <Card.Title>{props.book.title}</Card.Title>
+        </Card.Body>
+      </Card>
+    </div>
+  );
+  // }
+};
 
 export default SingleBook;
